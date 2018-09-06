@@ -1,4 +1,4 @@
-# Install script for directory: /Users/shuyangfan/COMP10002Project1
+# Install script for directory: /Users/shuyangfan/OneDrive - The University of Melbourne/COMP10002/Projects/p
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/shuyangfan/COMP10002Project1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/shuyangfan/OneDrive - The University of Melbourne/COMP10002/Projects/p/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
