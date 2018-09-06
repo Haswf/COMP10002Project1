@@ -1,3 +1,3 @@
-/Users/shuyangfan/OneDrive - The University of Melbourne/COMP10002/Projects/p/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/shuyangfan/OneDrive - The University of Melbourne/COMP10002/Projects/p/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/shuyangfan/OneDrive - The University of Melbourne/COMP10002/Projects/p/cmake-build-debug/CMakeFiles/p.dir
+/Users/shuyangfan/Github/COMP10002Project1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/shuyangfan/Github/COMP10002Project1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/shuyangfan/Github/COMP10002Project1/cmake-build-debug/CMakeFiles/p.dir

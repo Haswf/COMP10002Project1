@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/shuyangfan/OneDrive - The University of Melbourne/COMP10002/Projects/p/main.c
+/Users/shuyangfan/Github/COMP10002Project1/main.c
 stdio.h
 -
 stdlib.h
