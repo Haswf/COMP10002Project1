@@ -12,25 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="341395b2-2d0c-4253-8e2c-57825c26132a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CompilerIdC/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CompilerIdC/a.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/C.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/main.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/p.dir/main.c.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/p" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/p" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/p.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/p.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -43,36 +27,54 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="223" lean-forward="true" selection-start-line="223" selection-end-line="223" />
+            <state relative-caret-position="351">
+              <caret line="355" column="30" lean-forward="true" selection-start-line="355" selection-start-column="30" selection-end-line="355" selection-end-column="30" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#1738#2528#0" />
-                <element signature="e#2530#3145#0" />
-                <element signature="e#3147#3266#0" />
-                <element signature="e#3268#3598#0" />
-                <element signature="e#3600#5069#0" />
-                <element signature="e#5071#5320#0" />
-                <element signature="e#5322#5956#0" />
-                <element signature="e#5958#7372#0" />
-                <element signature="e#7401#7465#0" />
-                <element signature="e#7993#8141#0" expanded="true" />
-                <element signature="e#7520#8270#0" />
-                <element signature="e#8272#9120#0" />
-                <element signature="e#10701#10979#0" />
-                <element signature="e#11374#12042#0" />
-                <element signature="e#12044#12146#0" />
-                <element signature="e#12148#12585#0" />
+                <element signature="e#59#78#0" expanded="true" />
+                <element signature="e#1735#2377#0" />
+                <element signature="e#2379#2994#0" />
+                <element signature="e#2996#3115#0" />
+                <element signature="e#3117#3495#0" />
+                <element signature="e#3497#4990#0" />
+                <element signature="e#5257#5617#0" />
+                <element signature="e#5620#6193#0" />
+                <element signature="e#6197#7095#0" />
+                <element signature="e#7097#7702#0" />
+                <element signature="e#10591#11719#0" />
+                <element signature="e#12603#12895#0" />
+                <element signature="e#12897#13293#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>last_char</find>
+      <find>append</find>
+      <find>overlap</find>
+      <find>strrstr</find>
+      <find>remainder</find>
+      <find>over</find>
+      <find>str</find>
+      <find>vector</find>
+      <find>PicColomBoOkRabBitterNegative</find>
+      <find>print</find>
+      <find>max</find>
+      <find>stroverlap</find>
+      <find>max_overlap</find>
+      <find>over_lap</find>
+      <find>printf</find>
+      <find>insert</find>
+      <find>modify</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -94,9 +96,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-1920" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -104,7 +105,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -116,6 +116,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -155,34 +156,49 @@
       <option name="presentableId" value="Default" />
       <updated>1536197797451</updated>
       <workItem from="1536197798927" duration="3062000" />
+      <workItem from="1536203742712" duration="1268000" />
+      <workItem from="1536205116723" duration="2632000" />
+      <workItem from="1536215818311" duration="5351000" />
+      <workItem from="1536222170630" duration="556000" />
+      <workItem from="1536222786082" duration="52000" />
+      <workItem from="1536222843199" duration="871000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3062000" />
+    <option name="totallyTimeSpent" value="13792000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16666667" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" weight="0.32976654" />
-      <window_info anchor="bottom" id="CMake" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1109375" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32976654" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32486632" />
+      <window_info anchor="bottom" id="CMake" order="7" weight="0.32976654" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32976654" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39980546" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32976654" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.29411766" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,32 +209,167 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="25" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
+        <state relative-caret-position="6018">
+          <caret line="354" lean-forward="true" selection-start-line="354" selection-end-line="354" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2584">
+          <caret line="152" column="39" lean-forward="true" selection-start-line="152" selection-start-column="39" selection-end-line="152" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="101" column="18" lean-forward="true" selection-start-line="101" selection-start-column="18" selection-end-line="101" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1496">
+          <caret line="88" selection-start-line="88" selection-end-line="91" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3791">
           <caret line="223" lean-forward="true" selection-start-line="223" selection-end-line="223" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#1738#2528#0" />
-            <element signature="e#2530#3145#0" />
-            <element signature="e#3147#3266#0" />
-            <element signature="e#3268#3598#0" />
-            <element signature="e#3600#5069#0" />
-            <element signature="e#5071#5320#0" />
-            <element signature="e#5322#5956#0" />
-            <element signature="e#5958#7372#0" />
-            <element signature="e#7401#7465#0" />
-            <element signature="e#7993#8141#0" expanded="true" />
-            <element signature="e#7520#8270#0" />
-            <element signature="e#8272#9120#0" />
-            <element signature="e#10701#10979#0" />
-            <element signature="e#11374#12042#0" />
-            <element signature="e#12044#12146#0" />
-            <element signature="e#12148#12585#0" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="355" column="30" lean-forward="true" selection-start-line="355" selection-start-column="30" selection-end-line="355" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#59#78#0" expanded="true" />
+            <element signature="e#1735#2377#0" />
+            <element signature="e#2379#2994#0" />
+            <element signature="e#2996#3115#0" />
+            <element signature="e#3117#3495#0" />
+            <element signature="e#3497#4990#0" />
+            <element signature="e#5257#5617#0" />
+            <element signature="e#5620#6193#0" />
+            <element signature="e#6197#7095#0" />
+            <element signature="e#7097#7702#0" />
+            <element signature="e#10591#11719#0" />
+            <element signature="e#12603#12895#0" />
+            <element signature="e#12897#13293#0" />
           </folding>
         </state>
       </provider>
