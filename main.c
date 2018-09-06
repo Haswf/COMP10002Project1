@@ -20,6 +20,12 @@
 #define OVERLAP 1
 #define WITHIN 2
 
+// Output-related constants
+#define FIRST_25_CHARACTERS 25
+#define THRESHOULD_LENGTH 54
+#define FIRST_TEN_FRAGMENT 10
+#define LAST_ELEMENT_INDICATOR -1
+
 //initialize the superstring with the biggest possible size (i.e. MAX_NUM * MAX_LEN)
 typedef struct _superstr{char thestring[MAX_NUM * MAX_LEN];
                             char processed[MAX_NUM][MAX_LEN];
@@ -38,14 +44,14 @@ char* place_initial_fragment(char* superstr, char* substr);
 int append_to_superstr(char* superstr, char* substr);
 int strerase(char *str);
 char* max_overlap(superstr_t *superstr_pointer, int* index);
+void print_restricted_superstr(char* superstr, int superstrlen);
+void print_output(int nth, int frg_no, char *superstr, int end);
+void print_output_header(int stage_no);
 int stage0(superstr_t superstr);
 int stage1(superstr_t superstr);
 
-
-
 //DEBUGGING UTILITIES
 void print_array(char array[MAX_NUM][MAX_LEN], int count);
-
 
 int read_str(char strarr[MAX_NUM][MAX_LEN]){
     int frag_counter = 0;
@@ -64,7 +70,8 @@ int read_str(char strarr[MAX_NUM][MAX_LEN]){
             }
         }
     }
-    printf("Stage 0 Output\n--------------\n%d fragments read, %d characters in total\n\n", frag_counter, char_counter);
+    print_output_header(0);
+    printf("%d fragments read, %d characters in total\n", frag_counter, char_counter);
     return frag_counter;
 }
 
@@ -164,7 +171,9 @@ char* place_initial_fragment(char* superstr, char* substr){
     strtoupper(substr, INITIAL_CHARACTER_INDEX);
     // Use the first fragment to initialize a superstring.
     strcpy(superstr, substr);
-    printf("%d: frg= %d, slen= %lu  %s\n", INITIAL_FRAGMENT_INDEX, INITIAL_FRAGMENT_INDEX, strlen(superstr), superstr);
+//    printf("%2d: frg= %2d, slen= %2d  ", INITIAL_FRAGMENT_INDEX, INITIAL_FRAGMENT_INDEX, (int)strlen(superstr));
+//    print_output(superstr, INITIAL_FRAGMENT_INDEX);
+    print_output(INITIAL_FRAGMENT_INDEX, INITIAL_FRAGMENT_INDEX, superstr, 0);
     return superstr;
 }
 
@@ -179,7 +188,7 @@ int append_to_superstr(char* superstr, char* substr){
     char overlap[MAX_LEN] = {'\0'};
     char remainder[MAX_LEN] = {'\0'};
 
-    // char* postion point to where the overlap exists in superstring.
+    // char* position point to where the overlap exists in superstring.
     char* position;
     position = stroverlap(superstr, substr, &overlap, &remainder);
 
@@ -223,9 +232,10 @@ int strerase(char *str){
     }
 }
 
-
 int stage1(superstr_t superstr){
-    // Declare a pointer point to local superstr.
+    print_output_header(1);
+
+    // Declare a pointer point to local superstring.
     superstr_t *superstr_pointer = &superstr;
 
     // Place the first fragment to initialize a superstring.
@@ -236,17 +246,19 @@ int stage1(superstr_t superstr){
     int i;
     for (i = 1; i < frag_count; i++){
         append_to_superstr(superstr_pointer->thestring, superstr_pointer->unprocessed[i]);
-        printf("%d: frg= %d, slen= %lu  %s\n", i, i, strlen(superstr_pointer->thestring), superstr_pointer->thestring);
+        print_output(i, i, superstr_pointer->thestring, 0);
+        if (i==frag_count-1){
+            print_output(i, i, superstr_pointer->thestring, 1);
+        }
     }
     return i;
 }
 
 int stage2(superstr_t superstr){
-
+    print_output_header(2);
     // Declare a pointer point to local superstr.
     superstr_t *superstr_pointer = &superstr;
 
-    printf("Stage 3 Output\n");
     // Place the first fragment to initialize a superstring.
     place_initial_fragment(superstr.thestring, superstr.unprocessed[INITIAL_FRAGMENT_INDEX]);
     int index = 0;
@@ -254,8 +266,13 @@ int stage2(superstr_t superstr){
     for (int i = 1; i < superstr.unprocessed_count; i++){
         max = max_overlap(superstr_pointer, &index);
         append_to_superstr(superstr_pointer->thestring, max);
-        printf("%d: frg= %d, slen= %lu  %s\n", i, index, strlen(superstr_pointer->thestring), superstr_pointer->thestring);
+        // Remove the fragment which has been appended from the array
+        // To mark it as processed
         strerase(max);
+        print_output(i, index, superstr_pointer->thestring, 0);
+        if (i==superstr.unprocessed_count-1){
+            print_output(i, i, superstr_pointer->thestring, 1);
+        }
     }
 }
 
@@ -304,6 +321,51 @@ char* max_overlap(superstr_t *superstr_pointer, int *index){
     return max_location;
 }
 
+void print_array(char array[MAX_NUM][MAX_LEN], int count){
+    /* It takes an array and number of element in the array
+     * Print all non-empty strings in the given array
+     */
+    for(size_t i = 0; i < count && array[i]; i++)
+    {
+        printf("%s\n", array[i]);
+    }
+}
+
+void print_output(int nth, int frg_no, char *superstr, int end){
+    int len = strlen(superstr);
+    // Print output
+    if (nth<=FIRST_TEN_FRAGMENT || !(nth%5) || end){
+        if (end){
+            printf("---\n");
+            frg_no = LAST_ELEMENT_INDICATOR;
+        }
+        printf("%2d: frg=%2d, slen=%3d  ", nth, frg_no, len);
+        print_restricted_superstr(superstr, len);
+    }
+}
+
+void print_restricted_superstr(char* superstr, int superstrlen){
+    // if the superstring has fewer characters than 54, print it directly.
+    if (superstrlen<=THRESHOULD_LENGTH){
+        printf("%s\n", superstr);
+    }
+
+        // if the superstring has more characters than 54.
+    else if (superstr>THRESHOULD_LENGTH){
+        // Declare and make a copy of the superstring to avoid any modification;
+        char copy[superstrlen+1];
+        strcpy(copy, superstr);
+        memset(&copy[FIRST_25_CHARACTERS], '\0', sizeof(char));
+
+        // Print the fist and last 25 characters.
+        printf("%s .. %s\n", copy, &copy[superstrlen-FIRST_25_CHARACTERS]);
+    }
+}
+
+void print_output_header(int stage_no){
+    printf("\nStage %d Output\n--------------\n", stage_no);
+}
+
 int main(int agrc, char* agrv[]){
     superstr_t main_superstr;
     superstr_t *main_superstr_p = &main_superstr;
@@ -313,19 +375,9 @@ int main(int agrc, char* agrv[]){
     main_superstr.unprocessed_count = read_str(main_superstr.unprocessed);
 
     // Run stage 1;
-//    stage1(main_superstr);
+    stage1(main_superstr);
 
     // Run stage 2;
     stage2(main_superstr);
     return 0;
-}
-
-void print_array(char array[MAX_NUM][MAX_LEN], int count){
-    /* It takes an array and number of element in the array
-     * Print all non-empty strings in the given array
-     */
-    for(size_t i = 0; i < count && array[i]; i++)
-    {
-        printf("%s\n", array[i]);
-    }
 }
