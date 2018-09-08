@@ -10,10 +10,10 @@
 
 // DEBUGGING PANEL
 #define DEBUG 0
-#define OVERLAPDEBUG 0
 #define MARKASPROCESSED_DEBUG 0
-#define STROVERLAAP_DEBUG 0
+#define STROVERLAP_DEBUG 0
 #define BEST_OPERATION_DEBUG 0
+#define INSERT_TO_SUPERSTR_DEBUG 0
 
 // Limitations of the fragments
 #define MAX_LEN 21
@@ -33,12 +33,15 @@
 #define APPEND 0
 #define INSERT 1
 
+//JOINT POINT
+#define TAIL_ONLY 0
+#define HEAD_TAIL 1
+
 // Struct fragment is used to store #of fragment, its content and if it's processed or not.
 typedef struct _frg {int frg_index;  // The index of fragment
     char content[MAX_LEN];     // the content of the fragment
     int status; // status records processed or unprocessed
 } fragment_t;
-
 // Struct data_t is used to store input fragments and share them between helper functions.
 typedef struct _data {char superstr[MAX_LEN*MAX_NUM]; // The superstring
     int frg_count; // #of fragments read
@@ -61,6 +64,7 @@ void append_to_superstr(char* superstr, char* dest, char* src, int src_index, ch
 void insert_to_superstr(char* superstr, char* dest, char* src, int src_index, char* overlap, char* remainder);
 void mark_as_processed(data_t *data, int frg_index);
 void print_operation(operation_t *operation);
+int best_operation(data_t *data, operation_t *best_p, int joint_point);
 
 int read_str(fragment_t *fragments){
     int frag_counter = 0;
@@ -122,6 +126,10 @@ int stroverlap(char* str, char* substr, operation_t *operation){
 
     // Copy the entire substr to overlap
     strcpy(operation->overlap, substr);
+    #if (STROVERLAP_DEBUG)
+    printf("Search for %s in %s\n", operation->overlap, str);
+    #endif (STROVERLAP_DEBUG)
+
     char* position = NULL;
 
     // Check if the whole fragment is presented in the superstring
@@ -141,7 +149,7 @@ int stroverlap(char* str, char* substr, operation_t *operation){
             memset(last_char(operation->overlap),'\0', sizeof(char));
             // remainder get the "cross-outed" character.
             strcpy(operation->remainder, substr+i);
-#if (STROVERLAAP_DEBUG)
+#if (STROVERLAP_DEBUG)
             printf("Overlap= %s \tRemainder:= %s\n", operation->overlap,operation->remainder);
 #endif
         }
@@ -172,7 +180,7 @@ char* strtoupper(char* str, int index){
 void print_output(int nth, int frg_index, char *superstr, int end){
     int len = (int)strlen(superstr);
     // Print output
-    if (nth<=FIRST_TEN_FRAGMENT || !(nth%5) || end){
+    if (nth<=THRESOULD_LENGTH || !(nth%5) || end){
         if (end){
             printf("---\n");
             frg_index = LAST_ELEMENT_INDICATOR;
@@ -204,11 +212,21 @@ void print_output_header(int stage_no){
     printf("\nStage %d Output\n--------------\n", stage_no);
 }
 
+void print_operation(operation_t *operation){
+    printf("type= %d\n", operation->type);
+    printf("dest= %s\n", operation->dest);
+    printf("src= %s\n", operation->src);
+    printf("src_index= %d\n", operation->src_index);
+    printf("overlap= %s\n", operation->overlap);
+    printf("remainder= %s\n\n", operation->remainder);
+}
+
 int modify_superstr(data_t *data, operation_t *operation){
     if (operation->type == APPEND){
         append_to_superstr(data->superstr, operation->dest, operation->src, operation->src_index, operation->overlap, operation->remainder);
     }
     else if (operation->type == INSERT){
+        operation->src = data->fragments[operation->src_index].content;
         insert_to_superstr(data->superstr, operation->dest, operation->src, operation->src_index, operation->overlap, operation->remainder);
     }
     mark_as_processed(data, operation->src_index);
@@ -244,42 +262,55 @@ void append_to_superstr(char* superstr, char* dest, char* src, int src_index, ch
 void insert_to_superstr(char* superstr, char* dest, char* src, int src_index, char* overlap, char* remainder){
     // capitalize the first character of the overlap.
     strtoupper(overlap, INITIAL_CHARACTER_INDEX);
-    // Insert the superstr to the end of the remainder.
+    memset(dest, '\0', sizeof(char));
+
     char merge[strlen(src)+strlen(superstr)+1];
-    memset(dest, '\0',sizeof(char));
     strcpy(merge, strtoupper(src, INITIAL_CHARACTER_INDEX));
-    strcat(merge, overlap);
-    strcat(merge, remainder);
-    memcpy(superstr, merge, (strlen(merge)+1)*sizeof(char));
+    strcat(merge, superstr);
+    strncpy(superstr, merge, strlen(merge));
 }
 
-int best_operation(data_t *data, operation_t *best_p){
+int best_operation(data_t *data, operation_t *best_p, int joint_point){
+
     // The max length of overlap found in unprocessed fragments.
     int max_overlap = 0;
     const int frag_counts = data->frg_count;
     // Iterate through unprocessed fragment
     for (int i= 1; i < frag_counts; i++){
-        int cur_overlap_len = 0;
+        int insert_len = 0;
+        int append_len = 0;
         if (data->fragments[i].status){
             //Initialize an operation.
-            operation_t current_operation;
-            if ((cur_overlap_len = stroverlap(data->superstr, data->fragments[i].content, &current_operation))){
+            operation_t append_operation, insert_operation;
+            append_len = stroverlap(data->superstr, data->fragments[i].content, &append_operation);
+
 #if (BEST_OPERATION_DEBUG)
-                print_operation(&current_operation);
-                printf("%d: cur= %d max= %d overlap= %s\n", i, cur_overlap_len, max_overlap, best_p->overlap);
+            printf("i = %d\n", i);
+            printf("APPEND: \tLEN= %d\n",append_len);
+            print_operation(&append_operation);
 #endif
-                if (cur_overlap_len>max_overlap){
-                    max_overlap = cur_overlap_len;
-                    *best_p = current_operation;
+            if (append_len > max_overlap){
+                max_overlap = append_len;
+                *best_p = append_operation;
+                best_p->src_index = i;
+                best_p->type = APPEND;
+            }
+
+            if (joint_point == HEAD_TAIL){
+                insert_len = stroverlap(data->fragments[i].content, data->superstr, &insert_operation);
+                if (insert_len > max_overlap){
+                    max_overlap = insert_len;
+                    *best_p = insert_operation;
                     best_p->src_index = i;
+                    best_p->type = INSERT;
                 }
             }
-        }
-        else {
-            continue;
+#if (BEST_OPERATION_DEBUG)
+            printf("INSERT: \tLEN= %d\n",insert_len);
+            print_operation(&insert_operation);
+#endif
         }
     }
-
     if (max_overlap==0){
         int j;
         for (j = 1; (j < frag_counts); j++){
@@ -297,10 +328,15 @@ int best_operation(data_t *data, operation_t *best_p){
 
         best_p->dest = data->superstr;
         best_p->src = data->fragments[j].content;
+        best_p->type = APPEND;
         best_p->src_index = data->fragments[j].frg_index;
         memset(best_p->overlap, '\0', sizeof(char));
         strcpy(best_p->remainder, data->fragments[j].content);
     }
+#if (BEST_OPERATION_DEBUG)
+    printf("--------------------------BEST-----------------------\n");
+    print_operation(best_p);
+#endif
     return 0;
 }
 
@@ -342,8 +378,28 @@ int stage2(data_t data){
     operation_t best;
     // initialize_operation_t(&best);
     for (int i = 1; i < data.frg_count; i++){
-        best_operation(p2d, &best);
-        // print_operation(&best);
+        best_operation(p2d, &best, TAIL_ONLY);
+        modify_superstr(p2d, &best);
+        print_output(i, best.src_index, data.superstr, 0);
+        if (i==data.frg_count-1){
+            print_output(i, best.src_index, data.superstr, 1);
+        }
+    }
+    return 0;
+}
+
+int stage3(data_t data){
+    print_output_header(3);
+
+    // Declare a pointer point to local superstring.
+    data_t* p2d = &data;
+
+    // Place the first fragment to initialize a superstring.
+    place_initial_fragment(data.superstr, data.fragments[INITIAL_FRAGMENT_INDEX].content);
+    operation_t best;
+
+    for (int i = 1; i < data.frg_count; i++){
+        best_operation(p2d, &best, HEAD_TAIL);
         modify_superstr(p2d, &best);
         print_output(i, best.src_index, data.superstr, 0);
         if (i==data.frg_count-1){
@@ -385,14 +441,8 @@ int main(int argc, char* argv[]){
     // Run stage2
     stage2(data);
 
-    return 0;
-}
+    // Run stage3
+    stage3(data);
 
-void print_operation(operation_t *operation){
-    printf("type= %d\n", operation->type);
-    printf("dest= %s\n", operation->dest);
-    printf("src= %s\n", operation->src);
-    printf("src_index= %d\n", operation->src_index);
-    printf("overlap= %s\n", operation->overlap);
-    printf("remainder= %s\n", operation->remainder);
+    return 0;
 }
