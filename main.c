@@ -1,3 +1,31 @@
+/* Solution to comp10002 Assignment 1, 2018 semester 2.
+
+   Authorship Declaration:
+
+   I certify that the program contained in this submission is completely my
+   own individual work, except where explicitly noted by comments that
+   provide details otherwise.  I understand that work that has been
+   developed by another student, or by me in collaboration with other
+   students, or by non-students as a result of request, solicitation, or
+   payment, may not be submitted for assessment in this subject.  I further
+   understand that submitting for assessment work developed by or in
+   collaboration with other students or non-students constitutes Academic
+   Misconduct, and may be penalized by mark deductions, or by other
+   penalties determined via the University of Melbourne Academic Honesty
+   Policy, as described at https://academicintegrity.unimelb.edu.au.
+
+   I further certify that I have not provided a copy of this work in either
+   softcopy or hardcopy or any other form to any other student, and nor
+   will I do so until after the marks are released. I understand that
+   providing my work to other students, regardless of my intention or any
+   undertakings made to me by that other student, is also Academic
+   Misconduct.
+
+   Signed by: Shuyang Fan 988301
+   Dated:     September 10th, 2018
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #define _GNU_SOURCE
@@ -39,17 +67,17 @@
 #define HEAD_TAIL 1
 
 // Structure fragment is used to store #of fragment, its content and if it's processed or not.
-typedef struct _frg {int frg_index;  // The index of fragment
+typedef struct {int frg_index;  // The index of fragment
     char content[MAX_LEN];     // the content of the fragment
     int status; // status records processed or unprocessed
 } fragment_t;
 // Structure data_t is used to store input fragments and share them between helper functions.
-typedef struct _data {char superstr[MAX_LEN*MAX_NUM]; // The superstring
+typedef struct {char superstr[MAX_LEN*MAX_NUM]; // The superstring
     int frg_count; // #of fragments read
     fragment_t fragments[MAX_NUM];
 } data_t;
 
-typedef struct _operatoin {int type; // type of operation, insert(at the beginning) or append(to the end).
+typedef struct {int type; // type of operation, insert(at the beginning) or append(to the end).
     char* dest; // destination where the src will be insert(append to)
     char* src; // source fragment.
     int src_index;
@@ -57,6 +85,7 @@ typedef struct _operatoin {int type; // type of operation, insert(at the beginni
     char remainder[MAX_NUM*MAX_LEN]; // Non-overlap section of src.
 } operation_t;
 
+/* function prototypes */
 int read_str(fragment_t *fragments_p);
 char* strrcasestr(char* str, char* substr);
 char* last_char(char* str);
@@ -75,8 +104,6 @@ int stage1(data_t data);
 int stage2(data_t data);
 int stage3(data_t data);
 void mark_as_processed(data_t *data_p, int frg_index);
-
-
 
 int read_str(fragment_t *fragments_p){
     int frag_counter = 0;
