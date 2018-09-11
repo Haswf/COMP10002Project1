@@ -86,6 +86,7 @@ typedef struct {int type; // type of operation, insert(at the beginning) or appe
 } operation_t;
 
 /* function prototypes */
+int mygetchar();
 int read_str(fragment_t *fragments_p);
 char* strrcasestr(char* str, char* substr);
 char* last_char(char* str);
@@ -104,6 +105,16 @@ int stage1(data_t data);
 int stage2(data_t data);
 int stage3(data_t data);
 void mark_as_processed(data_t *data_p, int frg_index);
+
+int mygetchar(){
+    /* Function mygetchar was written by Alistair Moffat obtained from
+     * https://people.eng.unimelb.edu.au/ammoffat/teaching/10002/ass1/
+     */
+    int c;
+    while ((c=mygetchar())=='\r') {
+    }
+    return c;
+}
 
 int read_str(fragment_t *fragments_p){
     int frag_counter = 0;
