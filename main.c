@@ -26,11 +26,14 @@
 
 */
 
+/* Algorithms are fun */
+
 #include <stdio.h>
 #include <stdlib.h>
 #define _GNU_SOURCE
 #include <string.h>
-//Include strings.h to use strcasecmp.
+
+// includes strings.h to utilize function strcasecmp.
 #include <strings.h>
 #include <stdbool.h>
 #include <ctype.h>
@@ -38,23 +41,17 @@
 #define INITIAL_FRAGMENT_INDEX 0
 #define INITIAL_CHARACTER_INDEX 0
 
-// DEBUGGING PANEL
-#define READSTR_DEBUG 0
-#define STROVERLAP_DEBUG 0
-#define BEST_OPERATION_DEBUG 0
-#define  MODIFY_DEBUG 0
-
 // Limitations of the fragments
-#define MAX_LEN 21
+#define MAX_LEN 20
 #define MAX_NUM 1000
 
 // Output-related constants
 #define FIRST_25_CHARACTERS 25
-#define THRESOULD_LENGTH 54
+#define THRESHOLD_LENGTH 54
 #define FIRST_TEN_FRAGMENT 10
 #define LAST_ELEMENT_INDICATOR (-1)
 
-// Status indicator used in struct fragment_t
+// Status indicator in struct fragment_t
 #define PROCESSED 0
 #define UNPROCESSED 1
 
@@ -62,41 +59,42 @@
 #define APPEND 0
 #define INSERT 1
 
-//JOINT POINT
+// Joint point
 #define TAIL_ONLY 0
 #define HEAD_TAIL 1
 
-// Structure fragment is used to store #of fragment, its content and if it's processed or not.
-typedef struct {int frg_index;  // The index of fragment
-    char content[MAX_LEN];     // the content of the fragment
-    int status; // status records processed or unprocessed
+// Structure fragment is used to store fragments read and relevant information.
+typedef struct {int frg_index;  // index of the fragment
+    char content[MAX_LEN+1];     // content of the fragment
+    int status; // processed or unprocessed
 } fragment_t;
-// Structure data_t is used to store input fragments and share them between helper functions.
-typedef struct {char superstr[MAX_LEN*MAX_NUM]; // The superstring
-    int frg_count; // #of fragments read
-    fragment_t fragments[MAX_NUM];
+
+// Structure data_t is used to store input fragments
+// and easily pass them into functions.
+typedef struct {char superstr[(MAX_LEN+1)*MAX_NUM]; // array stores superstring
+    int frg_count; // #of fragments read in total
+    fragment_t fragments[MAX_NUM]; //fragments
 } data_t;
 
-typedef struct {int type; // type of operation, insert(at the beginning) or append(to the end).
-    char* dest; // destination where the src will be insert(append to)
-    char* src; // source fragment.
-    int src_index;
-    char overlap[MAX_NUM*MAX_LEN]; // partial src which overlap with dest.
-    char remainder[MAX_NUM*MAX_LEN]; // Non-overlap section of src.
+typedef struct {int type; // type of operation
+    char* dest; // destination where the src will be insert(append) to
+    char* src; // source fragment
+    int src_index; // source fragment index
+    char overlap[MAX_NUM*(MAX_LEN+1)]; // partial src which overlaps with dest
+    char remainder[MAX_NUM*(MAX_LEN+1)]; // Non-overlap section of src
 } operation_t;
 
 /* function prototypes */
 int mygetchar();
 int read_str(fragment_t *fragments_p);
-char* strrcasestr(char* str, char* substr);
+char* strrcasestr(char* haystack, char* needle);
 char* last_char(char* str);
-int stroverlap(char* str, char* substr, operation_t *operation);
+int stroverlap(char* str, char* substr, int frg_index, operation_t *operation);
 char* place_initial_fragment(char* superstr, char* substr);
 char* strtoupper(char* str, int index);
 void print_output(int nth, int frg_index, char *superstr, int end);
 void print_restricted_superstr(char *superstr, int superstrlen);
 void print_output_header(int stage_no);
-void print_operation(operation_t *operation_p);
 int modify_superstr(data_t*, operation_t*);
 void append_to_superstr(char* superstr, char* dest, char* src, char* overlap, char* remainder);
 void insert_to_superstr(char* superstr, char* dest, char* src, char* overlap);
@@ -107,56 +105,65 @@ int stage3(data_t data);
 void mark_as_processed(data_t *data_p, int frg_index);
 
 int mygetchar(){
-    /* Function mygetchar was written by Alistair Moffat obtained from
+    /* The following function was written by Alistair Moffat obtained from
      * https://people.eng.unimelb.edu.au/ammoffat/teaching/10002/ass1/
+     * All credit goes to him.
      */
     int c;
-    while ((c=mygetchar())=='\r') {
+    while ((c=getchar())=='\r') {
     }
     return c;
 }
 
-int read_str(fragment_t *fragments_p){
-    int frag_counter = 0;
-    int char_counter = 0;
-    int input_length = 0;
-    char cur_str[MAX_LEN];
-    while (scanf("%s", cur_str)==1 && frag_counter < MAX_NUM){
-        if ((input_length = (int)strlen(cur_str)) < MAX_LEN){
-            // frag_counter only incrases by one when the input has been successfully read.
-            // initialize_fragment_t(&fragments[frag_counter]);
-            if (strncpy(fragments_p[frag_counter].content, cur_str, strlen(cur_str))){
-                fragments_p[frag_counter].frg_index = frag_counter;
-                fragments_p[frag_counter].status = UNPROCESSED;
-                char_counter += input_length;
-#if (READSTR_DEBUG)
-                printf("%d:\t %s\t %d\n",fragments[frag_counter].frg_no,fragments[frag_counter].content, fragments[frag_counter].status);
-#endif
-                frag_counter++;
-            }
+int read_str(fragment_t *fragment_p){
+    /* read_str read fragments one by one from input and
+     * save them in an array of fragment_t.
+     * returns number of fragment read*/
+
+    int char_count = 0;
+    int char_index = 0;
+    int frag_index = 0;
+    char ch;
+    while (((ch = (char)mygetchar())!= EOF) && frag_index <= MAX_NUM)
+    {
+        if (ch!='\n' && isalnum(ch) && (char_index <= (MAX_LEN+1))){
+            fragment_p[frag_index].content[char_index++] = ch;
+        }
+        else if (ch == '\n'){
+            fragment_p[frag_index].content[char_index] = '\0';
+            fragment_p[frag_index].frg_index = frag_index;
+            fragment_p[frag_index].status = UNPROCESSED;
+            frag_index++;
+            char_count += char_index;
+            char_index = 0;
         }
     }
-    print_output_header(0);
-    printf("%d fragments read, %d characters in total\n", frag_counter, char_counter);
-    return frag_counter;
+    printf("%d fragments read, %d characters in total\n", frag_index, char_count);
+    return frag_index;
 }
 
-char* strrcasestr(char* str, char* substr){
+char* strrcasestr(char* haystack, char* needle){
+    /* The strrcasestr() locates a substring in a string,
+     * returns pointer in string to last place where substring occurs,
+     * returns NULL if substring does not occur in string,
+     * doing case-insensitive tests */
+
     char* p2s; // Pointer2string
     char *last_p = NULL;
-    if ((p2s = strcasestr(str, substr))){
+    if ((p2s = strcasestr(haystack, needle))){
         for (int i = 0; ; i++) {
-            if (!(p2s = strcasestr(p2s, substr))){
+            if (!(p2s = strcasestr(p2s, needle))){
+                /* if substring does not occur in superstring, break and
+                  return NULL */
                 break;
             }
             else{
                 last_p = p2s;
-                p2s = p2s+strlen(substr);
+                p2s += strlen(needle);
             }
         }
         p2s = last_p;
     }
-    // if no substr was found in str, return NULL
     return p2s;
 }
 
@@ -165,18 +172,14 @@ char* last_char(char* str){
     return &str[strlen(str)-1];
 }
 
-int stroverlap(char* str, char* substr, operation_t *operation){
+int stroverlap(char* str, char* substr, int frg_index, operation_t *operation){
     /* Search for the overlap part of str and char* substr.
      * Store how to merge them with minimum length in operation.
      * return length of overlap
     */
 
-    // Copy the entire substr to overlap
+    // Copy the entire substring to overlap
     strcpy(operation->overlap, substr);
-    #if (STROVERLAP_DEBUG)
-    printf("Search for %s in %s\n", operation->overlap, str);
-    #endif
-
     char* position = NULL;
 
     // Check if the whole fragment is presented in the superstring
@@ -184,25 +187,25 @@ int stroverlap(char* str, char* substr, operation_t *operation){
         position = strrcasestr(str, substr);
     }
 
-        // Otherwise, check if there is any overlap between the head and the tail.
+        // Otherwise, search for overlap between the head and the tail.
     else{
 
         for(int i = (int)strlen(substr)-1; i >= 0; i--){
-            // if partial fragment is presented in the superstring and it is at the end of the superstring.
-            if ((position = strrcasestr(str, operation->overlap)) && !strcasecmp(position, operation->overlap)){
+            /* if partial fragment is presented in the superstring and
+                it is at the end of the superstring. */
+            if ((position = strrcasestr(str, operation->overlap)) &&
+                    !strcasecmp(position, operation->overlap)){
                 break;
             }
-            // “Cross out” the last character in overlap.
+            // “cross out” the last character in overlap.
             memset(last_char(operation->overlap),'\0', sizeof(char));
             // remainder get the "cross-outed" character.
             strcpy(operation->remainder, substr+i);
-#if (STROVERLAP_DEBUG)
-            printf("Overlap= %s \tRemainder:= %s\n", operation->overlap,operation->remainder);
-#endif
         }
     }
     operation->src = substr;
     operation->dest = position;
+    operation->src_index = frg_index;
     return (int)strlen(operation->overlap);
 }
 
@@ -219,58 +222,57 @@ char* strtoupper(char* str, int index){
     /* Capitalise the index-th character in the string
      * return the modified string. */
     char upper_character = (char)toupper(str[index]);
-    memset(&str[index], upper_character, sizeof(char)); // Capitalised the character
+    // Capitalise the character
+    memset(&str[index], upper_character, sizeof(char));
     return str;
 }
 
 void print_output(int nth, int frg_index, char *superstr, int end){
     int len = (int)strlen(superstr);
-    // Print output
+    // print
     if (nth<=FIRST_TEN_FRAGMENT || !(nth%5) || end){
-        if (end){   // if it is indicated that this is the last fragment processed
+        // if it is indicated that this is the last fragment processed
+        if (end){
             printf("---\n");
             frg_index = LAST_ELEMENT_INDICATOR;
         }
         printf("%2d: frg=%2d, slen=%3d  ", nth, frg_index, len);
-        print_restricted_superstr(superstr, len); // Call print_restricted_superstr to print formatted output.
+        // Call print_restricted_superstr to print formatted output.
+        print_restricted_superstr(superstr, len);
     }
 }
 
 void print_restricted_superstr(char *superstr, int superstrlen){
-    // if the superstring has fewer characters than 54, print it directly.
-    if (superstrlen<=THRESOULD_LENGTH){
+    /* The print_restricted_superstr(char *superstr, int superstrlen) prints
+     * output if the len is within 54. Otherwise, it prints the first 25
+     * characters and the last 25 characters.
+     */
+
+    // if the superstring has fewer than 54 characters, print it directly
+    if (superstrlen<=THRESHOLD_LENGTH){
         printf("%s\n", superstr);
     }
 
-        // if the superstring has more characters than 54.
-    else if (superstrlen>THRESOULD_LENGTH){
+    // if the superstring has more than 54 characters
+    else if (superstrlen>THRESHOLD_LENGTH){
         // Declare and make a copy of the superstring to avoid any modification;
         char copy[superstrlen+1];
         strcpy(copy, superstr);
+        // Place a NULL terminator to "cut" first 25 characters
         memset(&copy[FIRST_25_CHARACTERS], '\0', sizeof(char));
 
-        // Print the fist and last 25 characters.
+        // Print the first and last 25 characters.
         printf("%s .. %s\n", copy, &copy[superstrlen-FIRST_25_CHARACTERS]);
     }
 }
 
 void print_output_header(int stage_no){
+    /* The print_output_header(int stage_no) prints stage header. */
     printf("\nStage %d Output\n--------------\n", stage_no);
 }
 
-void print_operation(operation_t *operation_p){
-    printf("type= %d\n", operation_p->type);
-    printf("dest= %s\n", operation_p->dest);
-    printf("src= %s\n", operation_p->src);
-    printf("src_index= %d\n", operation_p->src_index);
-    printf("overlap= %s\n", operation_p->overlap);
-    printf("remainder= %s\n\n", operation_p->remainder);
-}
-
 int modify_superstr(data_t *data_p, operation_t *operation_p){
-#if (MODIFY_DEBUG)
-    printf("Superstr before oprt= %s\n", data->superstr);
-#endif
+
     if (operation_p->type == APPEND){
         append_to_superstr(data_p->superstr, operation_p->dest, operation_p->src, operation_p->overlap, operation_p->remainder);
     }
@@ -279,15 +281,12 @@ int modify_superstr(data_t *data_p, operation_t *operation_p){
         insert_to_superstr(data_p->superstr, operation_p->dest, operation_p->src, operation_p->overlap);
     }
     mark_as_processed(data_p, operation_p->src_index);
-#if (MODIFY_DEBUG)
-    printf("----------OPERATION--------\n");
-    print_operation(operation);
-    printf("Superstr after oprt= %s\n", data->superstr);
-#endif
+
     return 0;
 }
 
-void append_to_superstr(char* superstr, char* dest, char* src, char* overlap, char* remainder){
+void append_to_superstr(char* superstr, char* dest, char* src,
+                        char* overlap, char* remainder){
     // the number of characters overlapping.
     int overlap_len = (int)strlen(overlap);
 
@@ -324,72 +323,65 @@ void insert_to_superstr(char* superstr, char* dest, char* src, char* overlap){
 }
 
 int best_operation(data_t *data_p, operation_t *best_p, int joint_point){
-    /* best operation takes structure data_t pointer, operation_t pointer and an int joint_point
-     * stands for type of operation expected.
-     * Then, it found the fragment gives the most overlap and store instructions on how to modify the
-     * the superstring in best_p.
+    /* best operation takes structure data_t pointer,
+     * operation_t pointer and an int joint_point stands for type of
+     * operation expected. Then, it found the fragment gives the most overlap
+     * and store instructions on how to modify the the superstring in best_p.
      */
 
-    // The max length of overlap found in unprocessed fragments.
+    // the max length of overlap found in unprocessed fragments.
     int max_overlap = 0;
 
-    // Iterate through unprocessed fragment
+    // iterate through unprocessed fragments
     for (int i= 1; i < data_p->frg_count; i++){
         int insert_len = 0;
         int append_len = 0;
         if (data_p->fragments[i].status){
-            //Initialize an operation.
+            //initialize an operation.
             operation_t append_operation, insert_operation;
-            append_len = stroverlap(data_p->superstr, data_p->fragments[i].content, &append_operation);
+            append_len = stroverlap(data_p->superstr, data_p->fragments[i]
+                    .content, i, &append_operation);
 
-#if (BEST_OPERATION_DEBUG)
-            printf("i = %d\n", i);
-            printf("APPEND: \tLEN= %d\n",append_len);
-            print_operation(&append_operation);
-#endif
             if (append_len > max_overlap){
                 max_overlap = append_len;
                 *best_p = append_operation;
-                best_p->src_index = i;
                 best_p->type = APPEND;
             }
 
             if (joint_point == HEAD_TAIL){
-                insert_len = stroverlap(data_p->fragments[i].content, data_p->superstr, &insert_operation);
+                insert_len = stroverlap(data_p->fragments[i].content,
+                        data_p->superstr, i, &insert_operation);
                 if (insert_len > max_overlap){
                     max_overlap = insert_len;
                     *best_p = insert_operation;
-                    best_p->src_index = i;
                     best_p->type = INSERT;
                 }
             }
-#if (BEST_OPERATION_DEBUG)
-            printf("INSERT: \tLEN= %d\n",insert_len);
-            print_operation(&insert_operation);
-#endif
         }
     }
     // zero-overlap obtained for all fragments
     if (!max_overlap){
-        int j;
-        for (j = 1; (j < data_p->frg_count); j++){
-            // Place the first unprocessed fragment at the end of the superstring.
-            if (data_p->fragments[j].status){
-                break;
-            }
-        }
-        // Generate operation.
-        best_p->dest = data_p->superstr;
-        best_p->src = data_p->fragments[j].content;
-        best_p->type = APPEND;
-        best_p->src_index = data_p->fragments[j].frg_index;
-        memset(best_p->overlap, '\0', sizeof(char));
-        strcpy(best_p->remainder, data_p->fragments[j].content);
+        find_unprocessed_fragment(data_p, best_p);
     }
-#if (BEST_OPERATION_DEBUG)
-    printf("--------------------------BEST-----------------------\n");
-    print_operation(best_p);
-#endif
+    return 0;
+}
+
+int find_unprocessed_fragment(data_t *data_p, operation_t *best_p){
+    int j;
+
+    for (j = 1; (j < data_p->frg_count); j++){
+        // Place the first unprocessed fragment at the end of the superstring.
+        if (data_p->fragments[j].status){
+            break;
+        }
+    }
+    // Generate operation.
+    best_p->dest = data_p->superstr;
+    best_p->src = data_p->fragments[j].content;
+    best_p->type = APPEND;
+    best_p->src_index = data_p->fragments[j].frg_index;
+    memset(best_p->overlap, '\0', sizeof(char));
+    strcpy(best_p->remainder, data_p->fragments[j].content);
     return 0;
 }
 
@@ -402,7 +394,7 @@ int stage1(data_t data){
     // Iterate and append other fragments.
     for (int i = 1; i < data.frg_count; i++){
         operation_t operation;
-        stroverlap(data.superstr, data.fragments[i].content, &operation);
+        stroverlap(data.superstr, data.fragments[i].content, i, &operation);
         operation.src_index = i;
         // Set operation type to APPEND for stage 1.
         operation.type = APPEND;
